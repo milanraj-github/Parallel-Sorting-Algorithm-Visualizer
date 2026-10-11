@@ -8,6 +8,19 @@ import { checkBackendHealth } from './services/api';
 export default function App() {
   const [activeTab, setActiveTab] = useState('playground');
   const [backendStatus, setBackendStatus] = useState(null);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  // Apply theme to html root element and persist in localStorage
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Poll backend health status on mount
   useEffect(() => {
@@ -33,13 +46,15 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         backendStatus={backendStatus}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       {/* Main Dynamic View */}
       <main className="main-content">
         {activeTab === 'playground' && <SortingPlayground />}
         {activeTab === 'parallel' && <ParallelExecution />}
-        {activeTab === 'performance' && <PerformanceAnalysis />}
+        {activeTab === 'performance' && <PerformanceAnalysis theme={theme} />}
       </main>
 
       {/* Footer */}

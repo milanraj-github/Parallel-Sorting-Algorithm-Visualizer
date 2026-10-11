@@ -1,7 +1,7 @@
 import React from 'react';
-import { Layers, Play, Cpu, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react';
+import { Layers, Play, Cpu, TrendingUp, Sun, Moon } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, backendStatus }) {
+export default function Navbar({ activeTab, setActiveTab, backendStatus, theme, toggleTheme }) {
   const isOnline = backendStatus?.status === 'healthy';
 
   return (
@@ -53,14 +53,27 @@ export default function Navbar({ activeTab, setActiveTab, backendStatus }) {
           </button>
         </nav>
 
-        {/* Backend Status indicator */}
-        <div className="status-pill" title={backendStatus?.message || 'Flask Multiprocessing API'}>
-          <span className={`status-dot ${isOnline ? 'online' : ''}`} />
-          <span>
-            {isOnline
-              ? `Backend Active (${backendStatus.cpu_count} Cores)`
-              : 'Connecting Backend...'}
-          </span>
+        {/* Actions: Backend Status indicator & Theme Toggle */}
+        <div className="navbar-actions">
+          <div className="status-pill" title={backendStatus?.message || 'Flask Multiprocessing API'}>
+            <span className={`status-dot ${isOnline ? 'online' : ''}`} />
+            <span>
+              {isOnline
+                ? `Backend Active (${backendStatus.cpu_count} Cores)`
+                : 'Connecting Backend...'}
+            </span>
+          </div>
+
+          <button
+            id="theme-toggle-btn"
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            <span className="theme-toggle-text">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
         </div>
       </div>
     </header>

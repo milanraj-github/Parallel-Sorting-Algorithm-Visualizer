@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   TrendingUp,
-  RotateCcw,
   CheckCircle2,
   XCircle,
   BarChart3,
@@ -34,7 +33,20 @@ const SIZE_PRESETS = [
   { label: 'Extra Large (100,000 items)', value: 100000 }
 ];
 
-export default function PerformanceAnalysis() {
+export default function PerformanceAnalysis({ theme = 'dark' }) {
+  const isLight = theme === 'light';
+  const chartGridStroke = isLight ? '#E2E8F0' : '#2B3545';
+  const chartTextStroke = isLight ? '#64748B' : '#A7B0C0';
+  const chartLabelFill = isLight ? '#475569' : '#A7B0C0';
+  const chartTooltipStyle = {
+    backgroundColor: isLight ? '#FFFFFF' : '#1E293B',
+    borderRadius: '8px',
+    border: isLight ? '1px solid #CBD5E1' : '1px solid #3E4C63',
+    color: isLight ? '#0F172A' : '#F8FAFC',
+    boxShadow: isLight ? '0 4px 12px rgba(0, 0, 0, 0.08)' : '0 4px 12px rgba(0, 0, 0, 0.4)'
+  };
+  const chartLegendStyle = { color: isLight ? '#0F172A' : '#F8FAFC' };
+
   const [arraySize, setArraySize] = useState(20000);
   const [numWorkers, setNumWorkers] = useState(4);
   const [trials, setTrials] = useState(1);
@@ -334,16 +346,16 @@ export default function PerformanceAnalysis() {
           <div style={{ height: '300px', width: '100%' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2B3545" />
-                <XAxis dataKey="size" stroke="#A7B0C0" label={{ value: 'Array Size (Elements)', position: 'insideBottom', offset: -5, fontSize: 12, fill: '#A7B0C0' }} />
-                <YAxis stroke="#A7B0C0" label={{ value: 'Time (ms)', angle: -90, position: 'insideLeft', fontSize: 12, fill: '#A7B0C0' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} />
+                <XAxis dataKey="size" stroke={chartTextStroke} label={{ value: 'Array Size (Elements)', position: 'insideBottom', offset: -5, fontSize: 12, fill: chartLabelFill }} />
+                <YAxis stroke={chartTextStroke} label={{ value: 'Time (ms)', angle: -90, position: 'insideLeft', fontSize: 12, fill: chartLabelFill }} />
                 <Tooltip
                   formatter={(val) => [`${val} ms`, '']}
-                  contentStyle={{ backgroundColor: '#1E293B', borderRadius: '8px', border: '1px solid #3E4C63', color: '#F8FAFC' }}
+                  contentStyle={chartTooltipStyle}
                 />
-                <Legend verticalAlign="top" height={36} wrapperStyle={{ color: '#F8FAFC' }} />
+                <Legend verticalAlign="top" height={36} wrapperStyle={chartLegendStyle} />
                 <Bar dataKey="sequential_ms" name="Sequential Merge Sort" fill="#FB7185" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="parallel_ms" name="Parallel Merge Sort" fill="#38BDF8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="parallel_ms" name="Parallel Merge Sort" fill={isLight ? '#0284C7' : '#38BDF8'} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -366,14 +378,14 @@ export default function PerformanceAnalysis() {
           <div style={{ height: '300px', width: '100%' }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2B3545" />
-                <XAxis dataKey="size" stroke="#A7B0C0" label={{ value: 'Array Size (Elements)', position: 'insideBottom', offset: -5, fontSize: 12, fill: '#A7B0C0' }} />
-                <YAxis stroke="#A7B0C0" label={{ value: 'Speedup Factor', angle: -90, position: 'insideLeft', fontSize: 12, fill: '#A7B0C0' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} />
+                <XAxis dataKey="size" stroke={chartTextStroke} label={{ value: 'Array Size (Elements)', position: 'insideBottom', offset: -5, fontSize: 12, fill: chartLabelFill }} />
+                <YAxis stroke={chartTextStroke} label={{ value: 'Speedup Factor', angle: -90, position: 'insideLeft', fontSize: 12, fill: chartLabelFill }} />
                 <Tooltip
                   formatter={(val) => [`${val}x`, 'Speedup']}
-                  contentStyle={{ backgroundColor: '#1E293B', borderRadius: '8px', border: '1px solid #3E4C63', color: '#F8FAFC' }}
+                  contentStyle={chartTooltipStyle}
                 />
-                <Legend verticalAlign="top" height={36} wrapperStyle={{ color: '#F8FAFC' }} />
+                <Legend verticalAlign="top" height={36} wrapperStyle={chartLegendStyle} />
                 <Line
                   type="monotone"
                   dataKey="speedup"

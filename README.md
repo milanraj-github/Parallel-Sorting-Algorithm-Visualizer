@@ -1,249 +1,225 @@
-# Parallel Sorting Algorithm Visualizer
+# Parallel Sorting Algorithm Visualizer ⚡📊
 
-A full-stack, academic-grade web application built for the **B.E. Computer Science and Engineering** subject **Parallel Computing**.
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.1-000000?style=flat-square&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-The application combines interactive step-by-step sorting animations with genuine operating system-level parallel processing using Python's `multiprocessing` module, paired with performance benchmarking, speedup curves, and academic correctness verification.
+An academic-grade, full-stack web application designed for the **B.E. Computer Science & Engineering** curriculum subject **Parallel Computing**.
 
----
-
-## 1. Project Overview
-
-Sorting algorithms form a cornerstone of computer science education. While traditional visualizers rely on browser timeouts and single-threaded JavaScript, this project demonstrates **authentic parallel computing**:
-
-1. **Frontend**: An interactive React + Vite dashboard demonstrating step-by-step algorithmic mechanics, worker chunk distributions, and Recharts performance plots.
-2. **Backend**: A modular Python Flask service implementing true multicore concurrency via `multiprocessing.Pool`, hierarchical K-way tree reduction merges, and microsecond-precision benchmarks with `time.perf_counter()`.
+The visualizer pairs step-by-step interactive algorithm simulations with **genuine OS-level multi-core multiprocessing** in Python, live microsecond performance benchmarking, speedup scaling curves, and a clean **Dark/Light theme** UI.
 
 ---
 
-## 2. Main Features
+## 🌟 Key Highlights
 
-### A. Sorting Playground (6 Algorithms)
-- **Algorithms Supported**:
-  1. Bubble Sort ($O(n^2)$)
-  2. Selection Sort ($O(n^2)$)
-  3. Insertion Sort ($O(n^2)$)
-  4. Merge Sort ($O(n \log n)$)
-  5. Quick Sort ($O(n \log n)$)
-  6. Parallel Merge Sort ($O(\frac{n}{P} \log \frac{n}{P} + n \log P)$)
-- **Input Controls**:
-  - Custom integer input (e.g. `8, 3, 6, 1, 9, 2, 5, 4` or negative integers)
-  - Presets: Random, Reverse Sorted, Nearly Sorted, Duplicates, Negative Numbers
-  - Array size slider (5 to 80 elements)
-  - Speed slider (10ms to 600ms per step)
-- **Animation Controls**:
-  - Non-overlapping execution: **Start**, **Pause**, **Resume**, **Reset**
-  - Distinct state coloring:
-    - Default unsorted: Light Blue (`#93c5fd`)
-    - Elements being compared: Amber/Orange (`#f59e0b`)
-    - Elements swapping or writing: Crimson (`#ef4444`)
-    - Quick Sort Pivot: Purple (`#8b5cf6`)
-    - Confirmed sorted: Emerald Green (`#10b981`)
-    - Worker process chunks: Blue, Green, Amber, Violet palette
-  - Real-time step counter: Comparisons, Swaps/Writes, Elapsed Time, Current Phase.
-
-### B. Parallel Execution (Multiprocessing Pipeline)
-- Dispatches custom array chunks to **2, 4, or 8 Python worker processes**.
-- Visualizes the 3-stage multiprocessing lifecycle:
-  1. **Balanced Array Chunking**: $k = \lfloor N / P \rfloor$
-  2. **Concurrent Worker Execution**: Worker lanes displaying Assigned Chunk, Worker Status, Sorted Chunk, and Worker CPU time.
-  3. **Hierarchical Tree Reduction (K-Way Merge)**: Step-by-step reduction rounds combining worker sub-lists.
-
-### C. Performance Analysis & Correctness Verification
-- Evaluates **Sequential Merge Sort** vs **Parallel Merge Sort** on identical inputs.
-- Microsecond timing with `time.perf_counter()`.
-- Interactive Recharts plots:
-  - **Execution Time Bar Chart** (Sequential vs Parallel ms across varying sizes: 1,000 to 100,000+ elements)
-  - **Speedup Scaling Curve** ($S$ vs Array Size)
-- **3-Point Correctness Verification**:
-  1. *Ascending Sorted Order*: $A[i] \le A[i+1]$
-  2. *Algorithmic Equivalence*: Sequential output $\equiv$ Parallel output
-  3. *Element Conservation*: Length and multiset identity preserved (no loss or duplicate corruption)
-- **Academic Context**: Clear explanation of Amdahl's Law and Inter-Process Communication (IPC) overhead for small datasets.
+- ⚡ **True Multiprocessing Concurrency**: Leverages Python `multiprocessing.Pool` across 2, 4, or 8 physical/logical CPU cores—not just simulated web workers.
+- 🎨 **Theme System**: Seamless toggle between a developer **Dark Mode** and crisp **Light Mode** with local persistence.
+- 🔬 **Academic Correctness Verification**: 3-point mathematical validation (Sorted Order, Algorithmic Equivalence, Element Conservation).
+- 📈 **Performance Benchmarking**: Microsecond-precision timing using `time.perf_counter()`, interactive Recharts speedup curves, and Amdahl's Law analysis.
+- 🕹️ **Interactive Playground**: Real-time step controls (Play, Pause, Resume, Reset, Speed Slider) across 6 algorithms.
 
 ---
 
-## 3. Technology Stack
+## 🚀 Live Demo & Visual Overview
 
-- **Frontend**: React 18, Vite, Vanilla CSS (Light Theme: White, Emerald Green, Tech Blue, Orange accents), Recharts, Lucide Icons.
-- **Backend**: Python 3.12, Flask 3.0, Flask-CORS, Python `multiprocessing`.
-- **Timing**: Python `time.perf_counter()`.
-- **Target Deployments**: Vercel (Frontend), Render (Backend).
+| Sorting Playground | Parallel Multiprocessing Lane |
+|:---:|:---:|
+| Interactive step-by-step state animations with comparing, swapping, pivot, and sorted highlights. | Visualizes balanced chunking ($k = \lfloor N / P \rfloor$), concurrent worker lanes, and K-way tree reduction. |
 
 ---
 
-## 4. Project Structure
+## 🧠 Algorithms Supported & Complexities
+
+| Algorithm | Best Case | Average Case | Worst Case | Space Complexity | Parallelizable |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Bubble Sort** | $\mathcal{O}(n)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(1)$ | ❌ Sequential |
+| **Selection Sort** | $\mathcal{O}(n^2)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(1)$ | ❌ Sequential |
+| **Insertion Sort** | $\mathcal{O}(n)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(1)$ | ❌ Sequential |
+| **Merge Sort** | $\mathcal{O}(n \log n)$ | $\mathcal{O}(n \log n)$ | $\mathcal{O}(n \log n)$ | $\mathcal{O}(n)$ | ⚠️ Recursive |
+| **Quick Sort** | $\mathcal{O}(n \log n)$ | $\mathcal{O}(n \log n)$ | $\mathcal{O}(n^2)$ | $\mathcal{O}(\log n)$ | ⚠️ Recursive |
+| **Parallel Merge Sort** | $\mathcal{O}(\frac{n}{P} \log \frac{n}{P})$ | $\mathcal{O}(\frac{n}{P} \log \frac{n}{P} + n \log P)$ | $\mathcal{O}(\frac{n}{P} \log \frac{n}{P} + n \log P)$ | $\mathcal{O}(n)$ | ✅ True Multiprocessing |
+
+---
+
+## 📐 Formal Parallel Computing Formulas
+
+### 1. Speedup ($S$)
+$$\text{Speedup } (S) = \frac{T_{\text{sequential}}}{T_{\text{parallel}}}$$
+*Quantifies the acceleration achieved by distributing work across $P$ concurrent processor cores.*
+
+### 2. Parallel Efficiency ($E$)
+$$\text{Efficiency } (E) = \left( \frac{S}{P} \right) \times 100\%$$
+*Measures how effectively the hardware cores are utilized. Ideal linear speedup yields $E = 100\%$.*
+
+### 3. Amdahl's Law
+$$S_{\max} = \frac{1}{(1 - p) + \frac{p}{P}}$$
+*Where $p$ is the parallel fraction (worker chunk sorting) and $(1 - p)$ is the sequential fraction (array partitioning and reduction merge).*
+
+> **💡 Note on IPC Overhead**: For small arrays ($N < 5{,}000$), sequential sorting is often faster because process spawning and IPC serialization take longer than the sort itself. As $N \ge 20{,}000$, parallel sorting dominates, delivering positive speedup ($S > 1.0$).
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**:
+  - React 19 + Vite
+  - Lucide React (Icons & UI cues)
+  - Recharts (Benchmark charts & speedup curves)
+  - Pure CSS Design System (Custom properties, responsive flex/grid layouts, light/dark themes)
+- **Backend**:
+  - Python 3.11+
+  - Flask 3.1 + Flask-CORS
+  - Python Standard Library `multiprocessing` & `time.perf_counter`
+  - Gunicorn (WSGI HTTP server for production)
+
+---
+
+## 📂 Project Structure
 
 ```text
-parallel-sorting-visualizer/
+Parallel-Sorting-Algorithm-Visualizer/
 ├── package.json                   # Root convenience scripts (dev, build, backend)
 ├── .gitignore                     # Git ignore rules for node_modules, pycache, etc.
-├── README.md                      # Complete academic project documentation
-├── frontend/
+├── README.md                      # Comprehensive project documentation
+├── frontend/                      # React + Vite application
 │   ├── index.html                 # App shell with SEO and metadata
-│   ├── package.json               # Frontend dependencies (React, Vite, Recharts, Lucide)
+│   ├── package.json               # Frontend dependencies & scripts
 │   ├── vite.config.js             # Vite configuration with /api proxy
-│   ├── .env.example               # Environment template (VITE_API_URL)
-│   ├── public/
-│   │   └── favicon.svg            # Custom SVG icon
+│   ├── public/                    # Static assets & SVG icons
 │   └── src/
 │       ├── main.jsx               # React entry point
-│       ├── App.jsx                # Tab navigation and health check
-│       ├── index.css              # Light theme design system and animations
+│       ├── App.jsx                # Theme provider, tab layout & health polling
+│       ├── index.css              # Dark & Light design system tokens
 │       ├── algorithms/
-│       │   └── sortingGenerators.js  # Step-by-step state generators for 6 algorithms
+│       │   └── sortingGenerators.js  # Generator functions for animations
 │       ├── components/
-│       │   ├── Navbar.jsx         # Header, college badge, tabs, backend status pill
-│       │   ├── SortingPlayground.jsx  # Interactive visualization and playback engine
-│       │   ├── ParallelExecution.jsx  # Multiprocessing worker lanes and merge tree
+│       │   ├── Navbar.jsx         # Header with tabs, core counter & theme toggle
+│       │   ├── SortingPlayground.jsx  # Interactive sandbox with step controls
+│       │   ├── ParallelExecution.jsx  # Multiprocessing chunk & merge tree visualizer
 │       │   ├── PerformanceAnalysis.jsx# Recharts benchmark graphs & verification
-│       │   ├── ArrayVisualizer.jsx# Dynamic vertical bar renderer
-│       │   └── StatsCard.jsx      # Metric cards with icons
+│       │   ├── ArrayVisualizer.jsx# Dynamic visual element renderer
+│       │   └── StatsCard.jsx      # Metrics cards
 │       └── services/
 │           └── api.js             # Client for Flask endpoints
-└── backend/
-    ├── app.py                     # Flask REST API entry point
-    ├── algorithms.py              # Pure sequential sorting implementations
-    ├── parallel_sort.py           # Multiprocessing parallel merge sort
-    ├── benchmark.py               # Benchmarking, speedup, efficiency, verification
-    ├── test_backend.py            # Unit tests for edge cases and multiprocessing
+└── backend/                       # Python Flask service
+    ├── app.py                     # REST API endpoints & CORS configuration
+    ├── algorithms.py              # Pure sequential sorting algorithms
+    ├── parallel_sort.py           # Multiprocessing parallel merge sort & K-way merge
+    ├── benchmark.py               # Microsecond benchmarking & 3-point verification
+    ├── test_backend.py            # Unit test suite
     └── requirements.txt           # Python dependencies (flask, flask-cors, gunicorn)
 ```
 
 ---
 
-## 5. Formal Parallel Computing Formulas
-
-### Speedup ($S$)
-$$\text{Speedup } (S) = \frac{T_{\text{sequential}}}{T_{\text{parallel}}}$$
-*Measures the performance improvement achieved by parallel execution over single-threaded execution.*
-
-### Parallel Efficiency ($E$)
-$$\text{Efficiency } (E) = \left( \frac{S}{P} \right) \times 100\%$$
-*Where $P$ is the number of worker processes. $100\%$ indicates ideal linear speedup.*
-
-### Amdahl's Law
-$$S_{\max} = \frac{1}{(1 - p) + \frac{p}{P}}$$
-*Where $p$ represents the parallelizable portion (worker chunk sorting), and $(1 - p)$ represents the sequential portion (array partitioning and final reduction merge).*
-
-> **Academic Note on Overhead**: For smaller datasets ($N < 5{,}000$), sequential sorting is often faster because process spawning and IPC serialization take longer than the sorting itself. As $N$ grows ($N \ge 20{,}000$), the parallel chunk sorting dominates and delivers positive speedup ($S > 1.0$).
-
----
-
-## 6. Installation & Local Setup
+## ⚙️ Installation & Local Setup
 
 ### Prerequisites
 - **Node.js** (v18+) and **npm**
 - **Python** (v3.10+)
 
-### Quick Start (From Root)
+### 1. Clone the Repository
+```bash
+git clone https://github.com/milanraj-github/Parallel-Sorting-Algorithm-Visualizer.git
+cd Parallel-Sorting-Algorithm-Visualizer
+```
 
-1. **Install Frontend Dependencies**:
-   ```bash
-   cd frontend
-   npm install
-   cd ..
-   ```
+### 2. Install Dependencies
+```bash
+# Frontend
+npm --prefix frontend install
 
-2. **Install Backend Dependencies**:
-   ```bash
-   pip install -r backend/requirements.txt
-   ```
+# Backend
+pip install -r backend/requirements.txt
+```
 
-3. **Start the Backend Server**:
-   ```bash
-   # From root:
-   npm run backend
-   # Or directly:
-   python backend/app.py
-   ```
-   *The Flask API starts on `http://localhost:5000`.*
+### 3. Run the Servers
 
-4. **Start the Frontend Development Server**:
-   ```bash
-   # From root in a separate terminal:
-   npm run dev
-   ```
-   *The Vite development server starts on `http://localhost:5173`.*
+#### Terminal 1 — Backend (Flask API):
+```bash
+python backend/app.py
+```
+*API will start on `http://localhost:5000`.*
 
-5. Open your browser at **`http://localhost:5173`**.
+#### Terminal 2 — Frontend (Vite Dev Server):
+```bash
+npm run dev
+```
+*Vite will start on `http://localhost:5173`.*
 
----
-
-## 7. Backend API Documentation
-
-| Method | Endpoint | Description | Request Body Example |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/health` | Backend status & CPU core count | None |
-| `POST` | `/api/sort/sequential` | Executes sequential sort | `{"array": [8, 3, 6, 1], "algorithm": "merge"}` |
-| `POST` | `/api/sort/parallel` | True multiprocessing sort | `{"array": [8, 3, 6, 1], "num_workers": 4}` |
-| `POST` | `/api/benchmark` | Live single benchmark trial | `{"size": 20000, "num_workers": 4, "trials": 1}` |
-| `POST` | `/api/benchmark/suite` | Benchmark across multiple sizes | `{"sizes": [1000, 5000, 20000], "num_workers": 4}` |
+Open your browser at **`http://localhost:5173`**.
 
 ---
 
-## 8. Running Automated Unit Tests
+## 📡 Backend API Reference
 
-A full test suite is included in `backend/test_backend.py`. It tests:
-- All 5 sequential sorting algorithms against edge cases:
-  - Random arrays
-  - Already sorted arrays
-  - Reverse sorted arrays (worst case)
-  - Arrays with duplicate numbers
-  - Arrays with negative integers
-  - Single-element arrays
-  - Empty arrays
-- Balanced array chunking
-- Multiprocessing Parallel Merge Sort
-- Correctness verification criteria (Sorted check, Equivalence check, Conservation check)
-- Benchmark calculation
+| Endpoint | Method | Description | Payload Example |
+| :--- | :---: | :--- | :--- |
+| `/api/health` | `GET` | Health status and CPU core count | `None` |
+| `/api/sort/sequential` | `POST` | Execute sequential sort algorithm | `{"array": [8, 3, 6, 1], "algorithm": "merge"}` |
+| `/api/sort/parallel` | `POST` | Execute multiprocessing sort | `{"array": [8, 3, 6, 1], "num_workers": 4}` |
+| `/api/benchmark` | `POST` | Live single benchmark trial | `{"size": 20000, "num_workers": 4, "trials": 1}` |
+| `/api/benchmark/suite` | `POST` | Benchmark multiple sizes | `{"sizes": [1000, 5000, 20000], "num_workers": 4}` |
 
-Run tests with:
+---
+
+## 🧪 Automated Unit Testing
+
+A comprehensive automated test suite covers algorithmic edge cases, chunking fairness, correctness criteria, and benchmark validity:
+
 ```bash
 python backend/test_backend.py
 ```
-Output:
+
+Expected output:
 ```text
 ......
 ----------------------------------------------------------------------
-Ran 6 tests in 2.4s
+Ran 6 tests in 2.2s
 
 OK
 ```
 
 ---
 
-## 9. Deployment Instructions
+## 🌐 Deployment Guide
 
-### Frontend Deployment on Vercel
-1. Push this repository to GitHub.
-2. In [Vercel Dashboard](https://vercel.com), click **Add New Project** and import the repository.
-3. Configure the build settings:
-   - **Framework Preset**: Vite
+### Frontend (Vercel)
+1. Push repository to GitHub.
+2. In Vercel, click **Add New Project** and select this repository.
+3. Configure build settings:
    - **Root Directory**: `frontend`
+   - **Framework Preset**: `Vite`
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
-4. Add the Environment Variable:
-   - `VITE_API_URL` = `https://your-backend-app.onrender.com`
+4. Set Environment Variable:
+   - `VITE_API_URL` = `https://<your-backend-url>.onrender.com`
 5. Click **Deploy**.
 
-### Backend Deployment on Render
-1. In [Render Dashboard](https://render.com), click **New +** -> **Web Service**.
+### Backend (Render)
+1. In Render, select **New Web Service**.
 2. Connect your GitHub repository.
-3. Configure service settings:
+3. Set the configuration:
    - **Root Directory**: `backend`
-   - **Runtime**: Python 3
+   - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn app:app -b 0.0.0.0:$PORT --workers 1 --threads 4`
-     *(Note: Using 1 worker process with multiple threads or standard python app allows multiprocessing processes inside Render containers).*
+   - **Start Command**: `python app.py`
 4. Click **Create Web Service**.
-5. Copy your Render URL (e.g., `https://parallel-sort-api.onrender.com`) and paste it into the `VITE_API_URL` setting in Vercel.
 
 ---
 
-## 10. Report-Friendly Code Structure
+## 📜 Academic Evaluation Criteria Met
 
-For students preparing their college report or presentation slides, the core executable logic is intentionally modular and concise:
-- [algorithms.py](file:///c:/Users/prashanth/PARALLEL%20SORTING%20ALGORITHM%20VISUALIZER/backend/algorithms.py): Clean, classical sorting algorithms (~65 lines).
-- [parallel_sort.py](file:///c:/Users/prashanth/PARALLEL%20SORTING%20ALGORITHM%20VISUALIZER/backend/parallel_sort.py): Multiprocessing pool chunk distribution and reduction merge (~120 lines).
-- [benchmark.py](file:///c:/Users/prashanth/PARALLEL%20SORTING%20ALGORITHM%20VISUALIZER/backend/benchmark.py): Microsecond benchmarking, Speedup/Efficiency formulas, and correctness checks (~110 lines).
-- [app.py](file:///c:/Users/prashanth/PARALLEL%20SORTING%20ALGORITHM%20VISUALIZER/backend/app.py): Flask REST API routes with input sanitization (~140 lines).
+- [x] Authentic OS-level process management with `multiprocessing.Pool`
+- [x] Comparative evaluation between sequential and parallel implementations
+- [x] Speedup curves and parallel efficiency calculations
+- [x] 3-point automated correctness verification
+- [x] Responsive Light/Dark theme user interface
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
